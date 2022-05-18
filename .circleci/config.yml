@@ -1,0 +1,187 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
+executors:
+  terraform:
+    docker:
+      - image: hashicorp/terraform:0.13.5
+
+jobs:
+  npm_install_lint_and_test:
+    machine:
+      image: ubuntu-2004:202010-01
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
+      - run:
+          name: npm install
+          command: |
+            cd shared
+            npm install
+      - run:
+          name: npm lint for processUpload
+          command: |
+            npm run lint
+      - run:
+          name: npm test
+          command: |
+            npm test
+      - run:
+          name: npm audit (only for prod)
+          command: |
+            npm audit --only=prod
+      - run:
+          name: npm install (ingestion/batch/)
+          command: |
+            cd ..
+            cd ingestion/batch
+            npm install
+      - run:
+          name: npm lint for processUpload
+          command: |
+            npm run lint
+      - run:
+          name: npm test
+          command: |
+            npm test
+      - run:
+          name: npm audit (only for prod)
+          command: |
+            npm audit --only=prod
+      - run:
+          name: npm install
+          command: |
+            cd ../
+            cd ingestion/streaming
+            npm install
+      - run:
+          name: npm lint for processUpload
+          command: |
+            npm run lint
+      - run:
+          name: npm audit (only for prod)
+          command: |
+            npm audit --only=prod 
+      - run:
+          name: npm install
+          command: |
+            cd ../../
+            cd api/v1
+            npm install
+      - run:
+          name: npm lint for processUpload
+          command: |
+            npm run lint
+      - run:
+          name: npm audit (only for prod)
+          command: |
+            npm audit --only=prod
+      - run:
+          name: npm install
+          command: |
+            cd ../../
+            cd frontend
+            npm install
+      - run:
+          name: npm lint for processUpload
+          command: |
+            npm run lint
+      - run:
+          name: npm audit (only for prod)
+          command: |
+            npm audit --only=prod
+
+  terraform_plan:
+    executor: terraform
+    environment:
+      TF_LOG: TRACE
+    parameters:
+      env:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Init Terraform
+          working_directory: infra/module
+          command: |
+            echo "Initializing terraform..."
+            terraform init \
+              -backend-config="secret_key=${AWS_OPS_SECRET_ACCESS_KEY}" \
+              -backend-config="key=craft-gcp-integration.tfstate" \
+              -backend-config="access_key=${AWS_OPS_ACCESS_KEY}" \
+              -input=false 
+            echo "Done with terraform init command"
+            terraform workspace select << parameters.env >> || terraform workspace new << parameters.env >>
+      - run:
+          name: Terraform Plan
+          working_directory: infra/module
+          command: |
+            echo "Planning infrastructure update..."            
+            terraform plan \
+              -var "project_name=${GCP_CRAFT_ORG_PROJECT_NAME}" \
+              -var "service_account=${GCP_CRAFT_ORG_SERVICE_ACCOUNT}" \
+              -var "secret_key=${GCP_CRAFT_ORG_SECRET_KEY}" \
+              -var "aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+              -var "access_key=${AWS_ACCESS_KEY_ID}" \
+              -var "env=<< parameters.env >>" \
+              -input=false -out="tfplan_<< parameters.env >>"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - infra/module/*
+
+  deploy:
+    executor: terraform
+    parameters:
+      env:
+        type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Terraform Apply
+          working_directory: infra/module
+          command: |
+            terraform apply -auto-approve -input=false "tfplan_<< parameters.env >>"
+      - run:
+          command: |
+            echo "Applying data migration..."
+
+
+workflows:
+  main:
+    jobs:
+      - npm_install_lint_and_test:
+          name: run npm commands on each specific dir
+#      - terraform_plan:
+#          filters:
+#            branches:
+#              only:
+#                - main
+#          name: dev_plan
+#          context: dev
+#          env: dev
+#      - deploy:
+#          name: dev_deploy
+#          context: dev
+#          env: dev
+#          requires:
+#            - dev_plan
+##      - terraform_plan:
+##          name: production_plan
+##          context: production
+##          env: production
+##          type: approval
+##          requires:
+##            - staging_deploy
+##      - deploy:
+##          name: production_deploy
+##          context: production
+##          env: production
+##          requires:
+##            - production_plan
