@@ -25,74 +25,82 @@ jobs:
       - run:
           name: npm lint for processUpload
           command: |
+            cd shared
             npm run lint
       - run:
           name: npm test
           command: |
+            cd shared
             npm test
       - run:
           name: npm audit (only for prod)
           command: |
+            cd shared
             npm audit --only=prod
       - run:
           name: npm install (ingestion/batch/)
           command: |
-            cd ..
             cd ingestion/batch
             npm install
       - run:
           name: npm lint for processUpload
           command: |
+            cd ingestion/batch
             npm run lint
       - run:
           name: npm test
           command: |
+            cd ingestion/batch
             npm test
       - run:
           name: npm audit (only for prod)
           command: |
+            cd ingestion/batch
             npm audit --only=prod
       - run:
           name: npm install
           command: |
-            cd ../
             cd ingestion/streaming
             npm install
       - run:
           name: npm lint for processUpload
           command: |
+            cd ingestion/streaming
             npm run lint
       - run:
           name: npm audit (only for prod)
           command: |
-            npm audit --only=prod 
+            cd ingestion/streaming
+            npm audit --only=prod
       - run:
           name: npm install
           command: |
-            cd ../../
             cd api/v1
             npm install
       - run:
           name: npm lint for processUpload
           command: |
+            cd api/v1
             npm run lint
       - run:
           name: npm audit (only for prod)
           command: |
+            cd api/v1
             npm audit --only=prod
       - run:
           name: npm install
           command: |
-            cd ../../
             cd frontend
             npm install
       - run:
           name: npm lint for processUpload
           command: |
+            cd frontend
             npm run lint
       - run:
           name: npm audit (only for prod)
           command: |
+            cd frontend
             npm audit --only=prod
 
   terraform_plan:
