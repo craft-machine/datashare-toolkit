@@ -18,12 +18,12 @@ jobs:
           install-yarn: true
           node-version: '16.13'
       - run:
-          name: npm install
+          name: npm install - shared/
           command: |
             cd shared
             npm install
       - run:
-          name: npm lint for processUpload
+          name: npm lint
           command: |
             cd shared
             npm run lint
@@ -33,17 +33,17 @@ jobs:
             cd shared
             npm test
       - run:
-          name: npm audit (only for prod)
+          name: npm audit
           command: |
             cd shared
             npm audit --only=prod
       - run:
-          name: npm install (ingestion/batch/)
+          name: npm install - ingestion/batch/
           command: |
             cd ingestion/batch
             npm install
       - run:
-          name: npm lint for processUpload
+          name: npm lint
           command: |
             cd ingestion/batch
             npm run lint
@@ -53,54 +53,55 @@ jobs:
             cd ingestion/batch
             npm test
       - run:
-          name: npm audit (only for prod)
+          name: npm audit
           command: |
             cd ingestion/batch
             npm audit --only=prod
       - run:
-          name: npm install
+          name: npm install - ingestion/streaming/
           command: |
             cd ingestion/streaming
             npm install
       - run:
-          name: npm lint for processUpload
+          name: npm lint
           command: |
             cd ingestion/streaming
             npm run lint
       - run:
-          name: npm audit (only for prod)
+          name: npm audit
           command: |
             cd ingestion/streaming
             npm audit --only=prod
       - run:
-          name: npm install
+          name: npm install - api/v1
           command: |
             cd api/v1
             npm install
       - run:
-          name: npm lint for processUpload
+          name: npm lint
           command: |
             cd api/v1
             npm run lint
       - run:
-          name: npm audit (only for prod)
+          name: npm audit
           command: |
             cd api/v1
             npm audit --only=prod
       - run:
-          name: npm install
+          name: npm install - frontend/
           command: |
             cd frontend
             npm install
       - run:
-          name: npm lint for processUpload
+          name: npm lint
           command: |
             cd frontend
             npm run lint
       - run:
-          name: npm audit (only for prod)
+          name: npm audit
           command: |
             cd frontend
+            npm audit fix
             npm audit --only=prod
 
   terraform_plan:
