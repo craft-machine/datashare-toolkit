@@ -1,19 +1,3 @@
-/**
- * Copyright 2022 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 variable "install_service_account_key" {
   type        = string
   description = "Variable for installation service account key path"
@@ -24,11 +8,13 @@ variable "install_service_account_key" {
 variable "project_id" {
   type        = string
   description = "Variable for Project ID"
+  default     = "craftco-staging"
 }
 
 variable "environment_name" {
   type        = string
   description = "Variable for Environment Name"
+  default     = "staging"
 }
 
 variable "tag" {
@@ -146,6 +132,7 @@ variable "ui_domain" {
 variable "auth_domain" {
   type        = string
   description = "The Auth Domain"
+  default     = "craftco-staging.firebaseapp.com"
 }
 
 variable "api_domain" {
@@ -165,7 +152,7 @@ variable "storage_bucket_location" {
 
   validation {
     condition     = var.storage_bucket_location == "US" || var.storage_bucket_location == "EU" || var.storage_bucket_location == "ASIA"
-    error_message = "You can only enter the lastest release of 0.7.2."
+    error_message = "You can only enter the latest release of 0.7.2."
   }
 }
 
@@ -238,19 +225,19 @@ variable "api_ip_address" {
 variable "use_impersonation" {
   type        = bool
   description = "Flag indicating if impersonation is used"
-  default     = false
+  default     = true
 }
 
 variable "impersonated_service_account" {
   type        = string
   description = "The service account to impersonate"
-  default     = null
+  default     = "craftco-staging-svc@craftco-staging.iam.gserviceaccount.com"
 }
 
 variable "secret_name_prefix" {
   type        = string
   description = "The prefix used for the configuration secret names"
-  default     = "datashare"
+  default     = "craft_staging_datashare"
 }
 
 variable "submit_gcloud_builds" {
@@ -275,3 +262,19 @@ variable "marketplace_integration_enabled" {
   description = "Flag indicating if marketplace integration for datashare is enabled"
   default     = false
 }
+
+# use_impersonation              = true
+# impersonated_service_account   =
+# project_id                     =
+# environment_name               =
+# auth_domain                    =
+# secret_name_prefix             = "datashare"
+# tag                            = "2.0.0.0"
+
+## If using Cloud DNS, and you want the Terraform script to create the A records in the defined dns_zone, include the following:
+# deploy_custom_domains          = true
+# update_cloud_dns               = true
+# dns_zone                       =
+# create_static_api_ip_address   = false
+# api_domain                     =
+# ui_domain                      =

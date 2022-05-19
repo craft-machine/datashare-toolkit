@@ -116,26 +116,16 @@ jobs:
           name: Init Terraform
           working_directory: infra/module
           command: |
-            echo "Initializing terraform..."
+            cd terraform/deploy/env/<< parameters.env >>/
             terraform init \
-              -backend-config="secret_key=${AWS_OPS_SECRET_ACCESS_KEY}" \
-              -backend-config="key=craft-gcp-integration.tfstate" \
-              -backend-config="access_key=${AWS_OPS_ACCESS_KEY}" \
-              -input=false 
-            echo "Done with terraform init command"
-            terraform workspace select << parameters.env >> || terraform workspace new << parameters.env >>
+              -backend-config="key=datashare-toolkit.tfstate" \
+              -input=false
       - run:
           name: Terraform Plan
           working_directory: infra/module
           command: |
             echo "Planning infrastructure update..."            
             terraform plan \
-              -var "project_name=${GCP_CRAFT_ORG_PROJECT_NAME}" \
-              -var "service_account=${GCP_CRAFT_ORG_SERVICE_ACCOUNT}" \
-              -var "secret_key=${GCP_CRAFT_ORG_SECRET_KEY}" \
-              -var "aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
-              -var "access_key=${AWS_ACCESS_KEY_ID}" \
-              -var "env=<< parameters.env >>" \
               -input=false -out="tfplan_<< parameters.env >>"
       - persist_to_workspace:
           root: .
@@ -171,11 +161,11 @@ workflows:
 #            branches:
 #              only:
 #                - main
-#          name: dev_plan
-#          context: dev
-#          env: dev
+#          name: staging_plan
+#          context: staging
+#          env: staging
 #      - deploy:
-#          name: dev_deploy
+#          name: staging_deploy
 #          context: dev
 #          env: dev
 #          requires:
