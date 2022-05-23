@@ -1,7 +1,3 @@
-locals {
-  service_account_key = var.install_service_account_key != null ? file(var.install_service_account_key) : null
-}
-
 provider "google" {
   project = var.project_id
   region  = var.region
