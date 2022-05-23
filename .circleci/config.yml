@@ -114,7 +114,6 @@ jobs:
       - checkout
       - run:
           name: Init Terraform
-          working_directory: infra/module
           command: |
             cd terraform/deploy/env/<< parameters.env >>/
             terraform init \
@@ -127,10 +126,6 @@ jobs:
             echo "Planning infrastructure update..."            
             terraform plan \
               -input=false -out="tfplan_<< parameters.env >>"
-      - persist_to_workspace:
-          root: .
-          paths:
-            - infra/module/*
 
   deploy:
     executor: terraform
@@ -143,7 +138,6 @@ jobs:
           at: .
       - run:
           name: Terraform Apply
-          working_directory: infra/module
           command: |
             terraform apply -auto-approve -input=false "tfplan_<< parameters.env >>"
       - run:
