@@ -120,7 +120,6 @@ jobs:
             -input=false
       - run:
           name: Terraform Plan
-          working_directory: infra/module
           command: |
             echo "Planning infrastructure update..."
             cd terraform/deploy/env/<< parameters.env >>/
