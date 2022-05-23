@@ -117,7 +117,7 @@ jobs:
           command: |
             cd terraform/deploy/env/<< parameters.env >>/
             terraform init \
-            -var "credentials=${GCP_CRAFT_ORG_SECRET_KEY}" \
+            -var "credentials=${IMPERSONATED_SERVICE_ACCOUNT_KEY}" \
             -input=false
       - run:
           name: Terraform Plan
