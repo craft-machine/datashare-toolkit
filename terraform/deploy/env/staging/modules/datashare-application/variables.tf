@@ -138,7 +138,6 @@ variable "oauth_client_id" {
 variable "oauth_client_secret" {
   type        = string
   description = "The OAuth client secret"
-  sensitive   = true
 }
 
 variable "open_api_spec_file" {
