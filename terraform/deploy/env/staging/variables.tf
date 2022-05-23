@@ -262,10 +262,6 @@ variable "marketplace_integration_enabled" {
   default     = false
 }
 
-variable "credentials" {
-  type = string
-  description = "Obtained from circle-ci environment variables"
-}
 # use_impersonation              = true
 # impersonated_service_account   =
 # project_id                     =
