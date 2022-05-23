@@ -1,11 +1,11 @@
 terraform {
   backend "gcs" {
-    bucket = "craft-gcp-tfstate"
+    bucket = "craft-datashare-tfstate"
   }
 }
 
 resource "google_storage_bucket" "craft_gcp_tfstate" {
-  name     = "craft-gcp-tfstate"
+  name     = "craft-datashare-tfstate"
   location = "us-east1-b"
   lifecycle_rule {
     action {
