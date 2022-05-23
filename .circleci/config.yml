@@ -125,6 +125,10 @@ jobs:
             cd terraform/deploy/env/<< parameters.env >>/
             terraform plan \
               -input=false -out="tfplan_<< parameters.env >>"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - terraform/deploy/env/<< parameters.env >>
 
   deploy:
     executor: terraform
@@ -133,6 +137,8 @@ jobs:
         type: string
     steps:
       - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Terraform Apply
           command: |
