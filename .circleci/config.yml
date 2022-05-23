@@ -117,7 +117,8 @@ jobs:
           command: |
             cd terraform/deploy/env/<< parameters.env >>/
             terraform init \
-              -backend-config="craft-datashare-tfstate" \
+              -backend-config="bucket=craft-datashare-tfstate" \
+              -backend-config="impersonate_service_account=craftco-staging-svc@craftco-staging.iam.gserviceaccount.com" \
               -input=false
       - run:
           name: Terraform Plan
