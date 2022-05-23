@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.2
+  gcp-cli: circleci/gcp-cli@2.4.1
 
 executors:
   terraform:
@@ -139,6 +140,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - gcp-cli/install_and_initialize_cli:
+          context: << parameters.env >>
       - run:
           name: Terraform Apply
           command: |
