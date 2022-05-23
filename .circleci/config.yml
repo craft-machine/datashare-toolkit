@@ -116,7 +116,10 @@ jobs:
           name: Init Terraform
           command: |
             cd terraform/deploy/env/<< parameters.env >>/
-            terraform init -input=false
+            terraform init \
+            -var "service_account=${GCP_CRAFT_ORG_SERVICE_ACCOUNT}" \
+            -var "secret_key=${GCP_CRAFT_ORG_SECRET_KEY}" \
+            -input=false
       - run:
           name: Terraform Plan
           working_directory: infra/module
