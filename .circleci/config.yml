@@ -157,10 +157,6 @@ workflows:
       - npm_install_lint_and_test:
           name: node dependency installation
       - terraform_plan:
-          filters:
-            branches:
-              only:
-                - main
           name: staging_plan
           context: staging
           env: staging
