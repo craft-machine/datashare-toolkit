@@ -156,20 +156,20 @@ workflows:
     jobs:
       - npm_install_lint_and_test:
           name: node dependency installation
-#      - terraform_plan:
-#          filters:
-#            branches:
-#              only:
-#                - main
-#          name: staging_plan
-#          context: staging
-#          env: staging
-#      - deploy:
-#          name: staging_deploy
-#          context: dev
-#          env: dev
-#          requires:
-#            - dev_plan
+      - terraform_plan:
+          filters:
+            branches:
+              only:
+                - main
+          name: staging_plan
+          context: staging
+          env: staging
+      - deploy:
+          name: staging_deploy
+          context: staging
+          env: staging
+          requires:
+            - staging_plan
 ##      - terraform_plan:
 ##          name: production_plan
 ##          context: production
