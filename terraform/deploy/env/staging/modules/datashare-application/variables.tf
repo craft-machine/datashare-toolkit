@@ -143,7 +143,7 @@ variable "oauth_client_secret" {
 variable "open_api_spec_file" {
   type        = string
   description = "The open api spec local file location"
-  default     = "../../../../../../api/config/openapi_spec.v2.yaml.tmpl"
+  default     = "../../../../api/config/openapi_spec.v2.yaml.tmpl"
 }
 
 variable "use_remote_open_api_spec" {
