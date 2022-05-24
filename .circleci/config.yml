@@ -157,7 +157,7 @@ jobs:
             bash
             curl https://sdk.cloud.google.com > install.sh
             bash install.sh --disable-prompts
-            echo $PATH=/root/google-cloud-sdk/bin/
+            export PATH=$PATH:/root/google-cloud-sdk/bin/
       - run:
           name: gcloud CLI version
           command: gcloud version
