@@ -162,6 +162,7 @@ jobs:
             cd terraform/deploy/env/<< parameters.env >>/
             terraform apply -auto-approve -input=false "tfplan_<< parameters.env >>"
 
+
 workflows:
   main:
     jobs:
