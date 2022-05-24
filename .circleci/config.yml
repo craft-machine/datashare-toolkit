@@ -151,7 +151,7 @@ jobs:
           name: Install gcloud cli
           command: |
             apk add --update \
-            python \
+            python3 \
             curl \
             which \
             bash
