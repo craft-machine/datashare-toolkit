@@ -150,12 +150,12 @@ jobs:
       - run:
           name: Install gcloud cli
           command: |
-            RUN apk add --update \
+            apk add --update \
             python \
             curl \
             which \
             bash
-            RUN curl -sSL https://sdk.cloud.google.com | bash
+            curl -sSL https://sdk.cloud.google.com | bash
             ENV PATH $PATH:/root/google-cloud-sdk/bin
       - run:
           name: gcloud CLI version
