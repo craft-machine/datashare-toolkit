@@ -159,7 +159,7 @@ jobs:
             libc6-compat \
             openssh-client \
             apache2-utils \
-            git \
+            git
             curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-<< parameters.version >>-linux-x86_64.tar.gz && \
             tar xzf google-cloud-sdk-<< parameters.version >>-linux-x86_64.tar.gz && \
             rm google-cloud-sdk-<< parameters.version >>-linux-x86_64.tar.gz && \
