@@ -159,12 +159,8 @@ jobs:
             bash install.sh --disable-prompts
             export PATH=$PATH:/root/google-cloud-sdk/bin/
             gcloud version
-      - run:
-          name: Terraform Apply
-          command: |
             cd terraform/deploy/env/<< parameters.env >>/
             terraform apply -auto-approve -input=false "tfplan_<< parameters.env >>"
-
 
 workflows:
   main:
