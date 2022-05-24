@@ -136,20 +136,50 @@ jobs:
     parameters:
       env:
         type: string
+      version:
+        default: 363.0.0
+        description: >-
+          Version of the CLI to install. Must contain the full version number as it
+          appears in the URL on this page:
+          https://cloud.google.com/sdk/docs/downloads-versioned-archives
+        type: string
     steps:
       - checkout
-      - gcp-cli/install:
-          version : 386.0.0
       - attach_workspace:
           at: .
+      - run:
+          name: Install gcloud cli
+          command: |
+            install () {
+              # Set sudo to work whether logged in as root user or non-root user
+              if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+              cd ~/
+              curl -Ss --retry 5 https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-<<parameters.version>>-linux-x86_64.tar.gz | tar xz
+              echo 'source ~/google-cloud-sdk/path.bash.inc' >> $BASH_ENV
+            }
+
+            if grep 'docker\|lxc' /proc/1/cgroup > /dev/null 2>&1; then
+              if [[ "$(command -v gcloud)" == "" ]]; then
+                install
+              else
+                echo "gcloud CLI is already installed."
+              fi
+            else
+              echo "----------------------------------------------------------------------------------------------------"
+              echo "this is a machine executor job, replacing default installation of gcloud CLI"
+              echo "----------------------------------------------------------------------------------------------------"
+              sudo rm -rf /opt/google-cloud-sdk
+              install
+            fi
+      - run:
+          name: gcloud CLI version
+          command: gcloud version
+
       - run:
           name: Terraform Apply
           command: |
             cd terraform/deploy/env/<< parameters.env >>/
             terraform apply -auto-approve -input=false "tfplan_<< parameters.env >>"
-      - run:
-          command: |
-            echo "Applying data migration..."
 
 
 workflows:
