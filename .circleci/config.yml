@@ -150,13 +150,21 @@ jobs:
       - run:
           name: Install gcloud cli
           command: |
-            apk add --update \
-            python \
+            apk --no-cache add \
             curl \
-            which \
-            bash
-            curl -sSL https://sdk.cloud.google.com | bash
-            ENV PATH $PATH:/root/google-cloud-sdk/bin
+            python \
+            py-pip \
+            py-crcmod \
+            bash \
+            libc6-compat \
+            openssh-client \
+            apache2-utils \
+            git \
+            curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-<< parameters.version >>-linux-x86_64.tar.gz && \
+            tar xzf google-cloud-sdk-<< parameters.version >>-linux-x86_64.tar.gz && \
+            rm google-cloud-sdk-<< parameters.version >>-linux-x86_64.tar.gz && \
+            ln -s /lib /lib64 && \
+            export PATH=/google-cloud-sdk/bin:$PATH
       - run:
           name: gcloud CLI version
           command: gcloud version
