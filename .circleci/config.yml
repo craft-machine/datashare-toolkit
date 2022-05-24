@@ -158,14 +158,7 @@ jobs:
             curl https://sdk.cloud.google.com > install.sh
             bash install.sh --disable-prompts
             export PATH=$PATH:/root/google-cloud-sdk/bin/
-            echo $PATH
-            ls /root/google-cloud-sdk/bin
-            which gcloud
             gcloud version
-      - run:
-          name: gcloud CLI version
-          command: gcloud version
-
       - run:
           name: Terraform Apply
           command: |
