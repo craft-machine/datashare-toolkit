@@ -152,7 +152,7 @@ jobs:
           command: |
             apk add \
             curl \
-            python \
+            python3 \
             py-pip \
             py-crcmod \
             bash \
