@@ -47,7 +47,8 @@ cp ../../../../../../../shared/pubSubUtil.js "${FUNCTION_SHARED}/"
 cp ../../../../../../../shared/storageUtil.js "${FUNCTION_SHARED}/"
 
 echo "********Add debug logs to find the files in dir*********"
-ls /ingestion/batch
+ls tmp/ingestion/batch
+ls tmp/ingestion/batch/shared
 
 UNAME=$(uname | awk '{print tolower($0)}')
 if [ "$UNAME" == "darwin" ]; then
