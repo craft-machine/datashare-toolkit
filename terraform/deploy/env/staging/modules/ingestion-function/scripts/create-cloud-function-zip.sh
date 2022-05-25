@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ENV=$1
 TMP_PATH="tmp"
 
 if [ -d "${TMP_PATH}" ]; then
     rm -R "${TMP_PATH}"
 fi
 
+cd terraform/deploy/env/${ENV}/modules/ingestion-function/scripts/
 mkdir -p tmp/ingestion/batch/shared
 FUNCTION_SOURCE="tmp/ingestion/batch"
 FUNCTION_SHARED="tmp/ingestion/batch/shared"
@@ -30,25 +32,25 @@ FUNCTION_SHARED="tmp/ingestion/batch/shared"
 echo "------printing current working directory------"
 pwd
 echo "--------------------end-----------------------"
-cp ingestion/batch/config.js "${FUNCTION_SOURCE}/"
-cp ingestion/batch/configurationManager.js "${FUNCTION_SOURCE}/"
-cp ingestion/batch/index.js "${FUNCTION_SOURCE}/"
-cp ingestion/batch/package.json "${FUNCTION_SOURCE}/"
-cp ingestion/batch/package-lock.json "${FUNCTION_SOURCE}/"
+cp ../../../../../../../ingestion/batch/config.js "${FUNCTION_SOURCE}/"
+cp ../../../../../../../ingestion/batch/configurationManager.js "${FUNCTION_SOURCE}/"
+cp ../../../../../../../ingestion/batch/index.js "${FUNCTION_SOURCE}/"
+cp ../../../../../../../ingestion/batch/package.json "${FUNCTION_SOURCE}/"
+cp ../../../../../../../ingestion/batch/package-lock.json "${FUNCTION_SOURCE}/"
 
-cp shared/bigqueryUtil.js "${FUNCTION_SHARED}/"
-cp shared/cloudFunctionUtil.js "${FUNCTION_SHARED}/"
-cp shared/commerceProcurementUtil.js "${FUNCTION_SHARED}/"
-cp shared/commonUtil.js "${FUNCTION_SHARED}/"
-cp shared/index.js "${FUNCTION_SHARED}/"
-cp shared/package.json "${FUNCTION_SHARED}/"
-cp shared/package-lock.json "${FUNCTION_SHARED}/"
-cp shared/pubSubUtil.js "${FUNCTION_SHARED}/"
-cp shared/storageUtil.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/bigqueryUtil.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/cloudFunctionUtil.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/commerceProcurementUtil.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/commonUtil.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/index.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/package.json "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/package-lock.json "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/pubSubUtil.js "${FUNCTION_SHARED}/"
+cp ../../../../../../../shared/storageUtil.js "${FUNCTION_SHARED}/"
 
 echo "********Add debug logs to find the files in dir*********"
 ls tmp/ingestion/batch
-ls terraform/deploy/env/staging/modules/ingestion-function/scripts/tmp/ingestion/batch/shared
+ls tmp/ingestion/batch/shared
 
 UNAME=$(uname | awk '{print tolower($0)}')
 if [ "$UNAME" == "darwin" ]; then
