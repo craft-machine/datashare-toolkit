@@ -30,25 +30,25 @@ FUNCTION_SHARED="tmp/ingestion/batch/shared"
 echo "------printing current working directory------"
 pwd
 echo "--------------------end-----------------------"
-cp ../../../../../../../ingestion/batch/config.js "${FUNCTION_SOURCE}/"
-cp ../../../../../../../ingestion/batch/configurationManager.js "${FUNCTION_SOURCE}/"
-cp ../../../../../../../ingestion/batch/index.js "${FUNCTION_SOURCE}/"
-cp ../../../../../../../ingestion/batch/package.json "${FUNCTION_SOURCE}/"
-cp ../../../../../../../ingestion/batch/package-lock.json "${FUNCTION_SOURCE}/"
+cp ingestion/batch/config.js "${FUNCTION_SOURCE}/"
+cp ingestion/batch/configurationManager.js "${FUNCTION_SOURCE}/"
+cp ingestion/batch/index.js "${FUNCTION_SOURCE}/"
+cp ingestion/batch/package.json "${FUNCTION_SOURCE}/"
+cp ingestion/batch/package-lock.json "${FUNCTION_SOURCE}/"
 
-cp ../../../../../../../shared/bigqueryUtil.js "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/cloudFunctionUtil.js "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/commerceProcurementUtil.js "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/commonUtil.js "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/index.js "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/package.json "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/package-lock.json "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/pubSubUtil.js "${FUNCTION_SHARED}/"
-cp ../../../../../../../shared/storageUtil.js "${FUNCTION_SHARED}/"
+cp shared/bigqueryUtil.js "${FUNCTION_SHARED}/"
+cp shared/cloudFunctionUtil.js "${FUNCTION_SHARED}/"
+cp shared/commerceProcurementUtil.js "${FUNCTION_SHARED}/"
+cp shared/commonUtil.js "${FUNCTION_SHARED}/"
+cp shared/index.js "${FUNCTION_SHARED}/"
+cp shared/package.json "${FUNCTION_SHARED}/"
+cp shared/package-lock.json "${FUNCTION_SHARED}/"
+cp shared/pubSubUtil.js "${FUNCTION_SHARED}/"
+cp shared/storageUtil.js "${FUNCTION_SHARED}/"
 
 echo "********Add debug logs to find the files in dir*********"
 ls tmp/ingestion/batch
-ls tmp/ingestion/batch/shared
+ls terraform/deploy/env/staging/modules/ingestion-function/scripts/tmp/ingestion/batch/shared
 
 UNAME=$(uname | awk '{print tolower($0)}')
 if [ "$UNAME" == "darwin" ]; then
