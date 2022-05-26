@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@5.0.2
+  gcp-cli: circleci/gcp-cli@2.4.1
 
 executors:
   terraform:
@@ -117,11 +118,7 @@ jobs:
           working_directory: infra/module
           command: |
             echo "Initializing terraform..."
-            terraform init \
-              -backend-config="secret_key=${AWS_OPS_SECRET_ACCESS_KEY}" \
-              -backend-config="key=craft-gcp-integration.tfstate" \
-              -backend-config="access_key=${AWS_OPS_ACCESS_KEY}" \
-              -input=false 
+            terraform init -input=false 
             echo "Done with terraform init command"
             terraform workspace select << parameters.env >> || terraform workspace new << parameters.env >>
       - run:
@@ -129,18 +126,12 @@ jobs:
           working_directory: infra/module
           command: |
             echo "Planning infrastructure update..."            
-            terraform plan \
-              -var "project_name=${GCP_CRAFT_ORG_PROJECT_NAME}" \
-              -var "service_account=${GCP_CRAFT_ORG_SERVICE_ACCOUNT}" \
-              -var "secret_key=${GCP_CRAFT_ORG_SECRET_KEY}" \
-              -var "aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
-              -var "access_key=${AWS_ACCESS_KEY_ID}" \
-              -var "env=<< parameters.env >>" \
+            terraform plan 
               -input=false -out="tfplan_<< parameters.env >>"
       - persist_to_workspace:
           root: .
           paths:
-            - infra/module/*
+            - terraform/
 
   deploy:
     executor: terraform
@@ -152,13 +143,23 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Install gcloud cli
+          command: |
+            apk add --update \
+            python3 \
+            curl \
+            which \
+            bash
+            curl https://sdk.cloud.google.com > install.sh
+            bash install.sh --disable-prompts
+            export PATH=$PATH:/root/google-cloud-sdk/bin/
+            gcloud version
+      - run:
           name: Terraform Apply
           working_directory: infra/module
           command: |
+            cd terraform/
             terraform apply -auto-approve -input=false "tfplan_<< parameters.env >>"
-      - run:
-          command: |
-            echo "Applying data migration..."
 
 
 workflows:
@@ -171,25 +172,12 @@ workflows:
 #            branches:
 #              only:
 #                - main
-#          name: dev_plan
-#          context: dev
-#          env: dev
+#          name: staging_plan
+#          context: staging
+#          env: staging
 #      - deploy:
-#          name: dev_deploy
-#          context: dev
-#          env: dev
+#          name: staging_deploy
+#          context: staging
+#          env: staging
 #          requires:
-#            - dev_plan
-##      - terraform_plan:
-##          name: production_plan
-##          context: production
-##          env: production
-##          type: approval
-##          requires:
-##            - staging_deploy
-##      - deploy:
-##          name: production_deploy
-##          context: production
-##          env: production
-##          requires:
-##            - production_plan
+#            - staging_plan

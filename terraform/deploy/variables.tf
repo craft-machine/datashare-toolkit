@@ -39,12 +39,12 @@ variable "tag" {
 
 variable "region" {
   type    = string
-  default = "us-central1"
+  default = "us-east1"
 }
 
 variable "zone" {
   type    = string
-  default = "us-central1-a"
+  default = "us-east1-b"
 }
 
 variable "api_service_account_name" {
@@ -250,7 +250,6 @@ variable "impersonated_service_account" {
 variable "secret_name_prefix" {
   type        = string
   description = "The prefix used for the configuration secret names"
-  default     = "datashare"
 }
 
 variable "submit_gcloud_builds" {

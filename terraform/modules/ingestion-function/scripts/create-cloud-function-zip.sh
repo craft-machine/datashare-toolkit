@@ -20,6 +20,9 @@ if [ -d "${TMP_PATH}" ]; then
     rm -R "${TMP_PATH}"
 fi
 
+echo "------------------------- create-cloud-function-zip.sh --------------------------"
+pwd
+cd terraform/deploy/env/${ENV}/modules/ingestion-function/scripts/
 mkdir -p tmp/ingestion/batch/shared
 FUNCTION_SOURCE="tmp/ingestion/batch"
 FUNCTION_SHARED="tmp/ingestion/batch/shared"

@@ -28,7 +28,6 @@ output "ds_api_gateway_address" {
 
 output "open_api_spec" {
   value     = local.open_api_spec_content
-  sensitive = true
 }
 
 output "cloud_run_ds_ui_name" {

@@ -1,13 +1,13 @@
 ## terraform workspace select default
 ## terraform apply -auto-approve
 
-# use_impersonation              = true
+ use_impersonation              = false
 # impersonated_service_account   =
-# project_id                     = 
-# environment_name               =
-# auth_domain                    =
-# secret_name_prefix             = "datashare"
-# tag                            = "2.0.0.0"
+ project_id                     = "craftco-staging"
+ environment_name               = "staging"
+ auth_domain                    = "craftco-staging.firebaseapp.com"
+ secret_name_prefix             = "craft_staging_datashare"
+ tag                            = "2.0.0.0"
 
 ## If using Cloud DNS, and you want the Terraform script to create the A records in the defined dns_zone, include the following:
 # deploy_custom_domains          = true
