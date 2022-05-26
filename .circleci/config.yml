@@ -32,11 +32,11 @@ jobs:
           command: |
             cd shared
             npm test
-      - run:
-          name: npm audit - shared/
-          command: |
-            cd shared
-            npm audit --only=prod
+#      - run:
+#          name: npm audit - shared/
+#          command: |
+#            cd shared
+#            npm audit --only=prod
       - run:
           name: npm install - ingestion/batch/
           command: |
@@ -52,11 +52,11 @@ jobs:
           command: |
             cd ingestion/batch
             npm test
-      - run:
-          name: npm audit - ingestion/batch/
-          command: |
-            cd ingestion/batch
-            npm audit --only=prod
+#      - run:
+#          name: npm audit - ingestion/batch/
+#          command: |
+#            cd ingestion/batch
+#            npm audit --only=prod
       - run:
           name: npm install - ingestion/streaming/
           command: |
@@ -67,11 +67,11 @@ jobs:
           command: |
             cd ingestion/streaming
             npm run lint
-      - run:
-          name: npm audit - ingestion/streaming/
-          command: |
-            cd ingestion/streaming
-            npm audit --only=prod
+#      - run:
+#          name: npm audit - ingestion/streaming/
+#          command: |
+#            cd ingestion/streaming
+#            npm audit --only=prod
       - run:
           name: npm install - api/v1
           command: |
@@ -82,11 +82,11 @@ jobs:
           command: |
             cd api/v1
             npm run lint
-      - run:
-          name: npm audit - api/v1
-          command: |
-            cd api/v1
-            npm audit --only=prod
+#      - run:
+#          name: npm audit - api/v1
+#          command: |
+#            cd api/v1
+#            npm audit --only=prod
       - run:
           name: npm install - frontend/
           command: |
