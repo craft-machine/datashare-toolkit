@@ -1,8 +1,8 @@
 ## terraform workspace select default
 ## terraform apply -auto-approve
 
- use_impersonation              = false
-# impersonated_service_account   =
+ use_impersonation              = true
+ impersonated_service_account   = "craftco-staging-svc@craftco-staging.iam.gserviceaccount.com"
  project_id                     = "craftco-staging"
  environment_name               = "staging"
  auth_domain                    = "craftco-staging.firebaseapp.com"

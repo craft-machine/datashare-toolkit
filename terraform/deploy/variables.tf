@@ -238,13 +238,11 @@ variable "api_ip_address" {
 variable "use_impersonation" {
   type        = bool
   description = "Flag indicating if impersonation is used"
-  default     = false
 }
 
 variable "impersonated_service_account" {
   type        = string
   description = "The service account to impersonate"
-  default     = null
 }
 
 variable "secret_name_prefix" {
