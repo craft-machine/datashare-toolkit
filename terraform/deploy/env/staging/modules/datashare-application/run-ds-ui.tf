@@ -22,7 +22,7 @@ resource "null_resource" "gcloud_submit-ds-ui" {
   }
 
   provisioner "local-exec" {
-    command = "gcloud builds submit ${path.root}/../../frontend --config ${path.root}/../../frontend/cloudbuild.yaml --substitutions=TAG_NAME=${var.tag} --project ${var.project_id}"
+    command = "gcloud builds submit ../../../../frontend --config ../../../../frontend/cloudbuild.yaml --substitutions=TAG_NAME=${var.tag} --project ${var.project_id}"
   }
 }
 

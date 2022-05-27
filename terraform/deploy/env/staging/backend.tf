@@ -6,7 +6,7 @@ terraform {
 
 resource "google_storage_bucket" "craft_gcp_tfstate" {
   name     = "craft-datashare-tfstate"
-  location = "us-east1-b"
+  location = "us"
   lifecycle_rule {
     action {
       type = "Delete"
