@@ -178,7 +178,13 @@ variable "submit_gcloud_builds" {
 variable "use_impersonation" {
   type        = bool
   description = "Flag indicating if impersonation is used"
-  default     = false
+  default     = true
+}
+
+variable "impersonated_service_account" {
+  type        = string
+  description = "The service account to impersonate"
+  default     = "craftco-staging-svc@craftco-staging.iam.gserviceaccount.com"
 }
 
 variable "marketplace_integration_enabled" {

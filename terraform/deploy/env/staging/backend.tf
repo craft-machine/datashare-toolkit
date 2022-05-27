@@ -4,15 +4,15 @@ terraform {
   }
 }
 
-resource "google_storage_bucket" "craft_gcp_tfstate" {
-  name     = "craft-datashare-tfstate"
-  location = "us"
-  lifecycle_rule {
-    action {
-      type = "Delete"
-    }
-    condition {
-      num_newer_versions = 5
-    }
-  }
-}
+#resource "google_storage_bucket" "craft_gcp_tfstate" {
+#  name     = "craft-datashare-tfstate"
+#  location = "us"
+#  lifecycle_rule {
+#    action {
+#      type = "Delete"
+#    }
+#    condition {
+#      num_newer_versions = 5
+#    }
+#  }
+#}
